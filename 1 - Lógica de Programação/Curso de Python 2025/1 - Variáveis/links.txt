@@ -1,0 +1,2 @@
+Site para rodar código python - https://www.onlineide.pro/playground/python
+Código usado nesta aula: https://gist.githubusercontent.com/Jhonatan-de-Souza/26587c9853aba2fb25af3401b0ce73ef/raw/c36134b79b4d9d4b0408537d6c8bdbf3589534b7/app.py

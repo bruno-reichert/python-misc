@@ -1,0 +1,1 @@
+código usado nesta aula - https://gist.githubusercontent.com/Jhonatan-de-Souza/facc03bccc4c02ef75f15094944c79b0/raw/5e9622d5e1f8a17bfea9375a5060deba70fcdc1a/aapp.py

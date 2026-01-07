@@ -1,0 +1,2 @@
+Site para rodar código python - https://www.onlineide.pro/playground/python
+Opção 2(se o primeiro site não funcionar) - https://trinket.io/embed/python3

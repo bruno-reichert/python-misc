@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from home.views import *
 
 urlpatterns = [
+    path('', home, name='home'), # executa a a funcao home em views.py quando a raiz do site for acessada
+    path('sucess_page/', sucess_page, name='sucess_page'),
     path('admin/', admin.site.urls),
 ]
+

@@ -1,20 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Django Tutorial</title>
-</head>
-<body>
-    <h1>I am a Django server! Hello!</h1>
-    <p> This is my home page. This is coming from the Django server!</p>
+    {% extends "base.html" %}
+    {% block start %}
+
+
+    <h1>This is the index page</h1>
     <hr>
     <h3 style="color: orange;">I hope you like my Django page :)</h3>
     <p style="font-style: italic;">This is coming from an HTML template!</p>
-    <a href="/sucess_page/">Go to Sucess Page</a>
+    <a href="/sucess/">Go to Sucess Page</a>
+    <a href="/about/">Go to About Page</a>
+    <a href="/contact">Go to Contact Page</a>
+    <h3>This data is returned from the back-end! Woah!</h3>
+    <table class="container">
+        <tr>
+            <th>S. No.</th>
+            <th> Name </th>
+            <th> Age </th>
+            <th>Can Vote</th>
+        </tr>
+        {% for person in peoples %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ person.name }}</td>
+            <td>{{ person.age }}</td>
+            <td {% if person.age < 18 %} style="background-color: red;"{% else %} style="background-color: green;"{% endif %}>
+                {% if person.age >= 18 %}👍{% else %}👎{% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 
-    <script>
-        console.log("Hello from Django HTML template!");
-    </script>
-</body>
-</html>
+    <p>{{ text|truncatechars:80 }}</p>
+
+    <p>
+        {% if "cucumber" in vegetables %}
+        <strong>Cucumber is present in the vegetables list.</strong>
+        {% elif "Tomato" in vegetables %}
+        <strong>Tomato is present in the vegetables list.</strong>
+        {% else %}
+        <strong>Cucumber is not present in the vegetables list.</strong>
+        {% endif %}
+    </p>
+
+    {% endblock %}

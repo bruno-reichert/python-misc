@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from home.views import *
+from vege.views import *
 
 urlpatterns = [
     path('', home, name='home'), # executa a a funcao home em views.py quando a raiz do site for acessada
@@ -24,5 +25,7 @@ urlpatterns = [
     path('about/', about, name='about_page'),
     path('contact/', contact, name='contact_page'),
     path('admin/', admin.site.urls),
+
+    path('recipes/', recipes, name='recipes'),
 ]
 

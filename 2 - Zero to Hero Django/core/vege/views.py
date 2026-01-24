@@ -1,6 +1,8 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from .models import *
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 
 # Create your views here.
 def recipes(request):
@@ -54,3 +56,33 @@ def update_recipe(request, id):
         'recipe':queryset
     }
     return render(request, 'update_recipes.html', context)
+
+def login_page(request):
+    return render(request, 'login.html')
+
+def register(request):
+    if request.method == 'POST':
+        data = request.POST
+        username = data.get('username')
+        first_name = data.get('first_name')
+        last_name = data.get('last_name')
+        password = data.get('password')
+
+        user = User.objects.filter(username=username)
+        if user.exists():
+            messages.info(request, 'Username already taken')
+            return redirect('/register/')
+
+        user = User.objects.create(
+            username=username,
+            first_name=first_name,
+            last_name=last_name
+        )
+
+        user.set_password(password) # Criptografa a senha antes de salvar no banco de dados, importante para segurança. 
+        user.save()
+        messages.info(request, 'User created successfully!')
+
+        return redirect('/register/')
+
+    return render (request, 'register.html')

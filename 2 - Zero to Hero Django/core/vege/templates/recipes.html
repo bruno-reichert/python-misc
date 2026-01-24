@@ -20,7 +20,19 @@
         </div>
         <button type="submit" class="btn btn-success">Add recipe</button>
       </form>
-      <table class="table">
+    
+    <div class="mt-5">
+      <div class="mx-auto col-6">
+        <form>
+          <div class="mb-3">
+            <label for="search" class="form-label">Search Recipe</label>
+            <input type="text" class="form-control" id="search" placeholder="Search for recipes..." name="search">
+          </div>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+      </div>
+    </div>  
+      <table class="table mt-5">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -40,7 +52,8 @@
                 <img src="{{ recipe.image.url }}" alt="{{ recipe.recipe_name }}" width="100" style="height: 100px;">
             </td>
             <td>
-                <a href="/delete_recipes/{{ recipe.id }}/" class="btn btn-danger">Delete</a>
+                <a href="/delete_recipes/{{ recipe.id }}/" class="btn btn-danger m-2">Delete</a>
+                <a href="/update_recipe/{{ recipe.id }}/" class="btn btn-success m-2">Update</a>
             </td>
           </tr>
             {% endfor %}

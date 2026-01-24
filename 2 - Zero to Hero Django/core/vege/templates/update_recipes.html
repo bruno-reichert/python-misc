@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block start %}
+
+<div class="container mt-5">
+    <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+       {% csrf_token %}  <!-- token CSRF para proteger contra ataques CSRF (Cross-Site Request Forgery), que são tentativas maliciosas de enviar solicitações em nome de um usuário autenticado sem o seu consentimento. -->
+        <h2 style="text-align: center;">(Update) Recipe Form! Wow!</h2>
+        <hr>
+        <div class="mb-3">
+          <label for="recipe_name" name="recipe_name" class="form-label">Recipe name</label>
+          <input type="text" name="recipe_name" class="form-control" id="recipe_name" required value="{{recipe.recipe_name}}">
+        </div>
+        <div class="mb-3">
+          <label for="recipe_description" name="recipe_description" class="form-label">Recipe description</label>
+          <textarea name="recipe_description" id="recipe_description" class="form-control" required>{{recipe.recipe_description}}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="recipe_image" name="recipe_image" class="form-label">Recipe image</label>
+            <input type="file" name="recipe_image" class="form-control" id="recipe_image" value="{{recipe.image}}">
+        </div>
+        <button type="submit" class="btn btn-success">Update recipe</button>
+      </form>
+</div>
+
+{% endblock %}

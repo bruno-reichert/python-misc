@@ -34,6 +34,7 @@ urlpatterns = [
     path('update_recipe/<int:id>/', update_recipe, name='update_recipe'),
     path('login/', login_page, name='login'),
     path('register/', register, name='register'),
+    path('logout/', logout_page, name='logout'),
 ]
 
 if settings.DEBUG:

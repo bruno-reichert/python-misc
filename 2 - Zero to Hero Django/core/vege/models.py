@@ -11,6 +11,7 @@ class Recipe(models.Model):
 
 class Department(models.Model):
     department = models.CharField(max_length=100)
+    # date_of_creation = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.department

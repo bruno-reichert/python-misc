@@ -35,6 +35,7 @@ urlpatterns = [
     path('login/', login_page, name='login'),
     path('register/', register, name='register'),
     path('logout/', logout_page, name='logout'),
+    path('students/', get_students , name='students'),
 ]
 
 if settings.DEBUG:

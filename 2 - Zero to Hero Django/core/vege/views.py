@@ -31,6 +31,7 @@ def recipes(request):
         )
         return redirect('/recipes/')
     queryset = Recipe.objects.all()
+    
 
     if request.GET.get('search'):
         search = request.GET.get('search')
@@ -48,8 +49,8 @@ def delete_recipes(request, id):
     return redirect('/recipes/')
 
 @login_required(login_url='/login/')
-def update_recipe(request, id):
-    queryset = Recipe.objects.get(id=id)
+def update_recipe(request, slug):
+    queryset = Recipe.objects.get(slug=slug)
     if request.method == 'POST':
         data = request.POST
         recipe_name = data.get('recipe_name')

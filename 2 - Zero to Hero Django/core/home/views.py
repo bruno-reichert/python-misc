@@ -1,7 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
+from .utils import send_email_to_client, send_email_with_attachment
+from django.conf import settings
 
 # Create your views here.
+
+def send_email(request):
+    subject = "Greetings from Django App (plus file attachment!)"
+    message = "This email is sent from a Django view function, and (if it's working properly) it should come with an attachment too!"
+    recipient_list = ["brunowasborn2rock@gmail.com"]
+    file_path = f"{settings.MEDIA_ROOT}/recipes/AR-82659-old-fashioned-onion-rings-DDMFS-beauty-3x4-0392e762554545be97798821fccb7e67.webp"
+    send_email_with_attachment(subject, message, recipient_list, file_path)
+    return redirect('/')
 
 def home(request):
    peoples = [

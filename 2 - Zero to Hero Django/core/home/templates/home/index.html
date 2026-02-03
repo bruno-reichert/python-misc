@@ -4,12 +4,19 @@
 
     <h1>This is the index page</h1>
     <hr>
-    <h3 style="color: orange;">I hope you like my Django page :)</h3>
-    <p style="font-style: italic;">This is coming from an HTML template!</p>
+    <!-- <h3 style="color: orange;">I hope you like my Django page :)</h3>
+    <p style="font-style: italic;">This is coming from an HTML template!</p> -->
     <a href="/sucess/">Go to Sucess Page</a>
     <a href="/about/">Go to About Page</a>
     <a href="/contact">Go to Contact Page</a>
-    <h3>This data is returned from the back-end! Woah!</h3>
+    <!-- <h3>This data is returned from the back-end! Woah!</h3> -->
+
+    <div class="container my-3 p-3 border bg-light">
+        <p>Sending an E-Mail with Django!</p>
+        <a href="{% url 'send_email' %}" class="btn btn-success">Send Email</a>
+    </div>
+
+
     <table class="container">
         <tr>
             <th>S. No.</th>

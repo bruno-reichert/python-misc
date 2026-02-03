@@ -37,6 +37,8 @@ urlpatterns = [
     path('logout/', logout_page, name='logout'),
     path('students/', get_students , name='students'),
     path('see_marks/<student_id>/', see_marks , name='see_marks'),
+    path('send-email/', send_email, name='send_email'),
+
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,12 @@
+como ativar o ambiente virtual:
+
+ligue o terminalkkkkkk sla 
+
+como DESligar:
+deactivate
+
+como ligar o servidor:
+(no myproject) -> python manage.py runserver
+
+como sair do server:
+ctrl + c

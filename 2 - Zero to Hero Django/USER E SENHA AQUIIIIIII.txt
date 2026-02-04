@@ -8,6 +8,10 @@ user e senha do admin:
 - reichert
 - Crsis@123 (famosokkkkkkkkkkkkkk)
 
+
+- 987654321
+- 123
+
 como acessar o admin
 - [aquele link com o 127 e sla]/admin/ (COM O SERVIDOR LIGADO -> vá para core e digite python manage.py runserver)
 - login acima

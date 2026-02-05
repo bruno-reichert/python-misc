@@ -1,6 +1,7 @@
 como ativar o ambiente virtual:
-
-ligue o terminalkkkkkk sla 
+cd .venv
+cd Scripts
+.\activate
 
 como DESligar:
 deactivate

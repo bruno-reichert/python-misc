@@ -1,1 +1,0 @@
-console.log('This is JS from your main.js file in the static/css/js directory.');

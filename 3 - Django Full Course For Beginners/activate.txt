@@ -11,3 +11,7 @@ como ligar o servidor:
 
 como sair do server:
 ctrl + c
+
+login do admin
+bruno
+test123!

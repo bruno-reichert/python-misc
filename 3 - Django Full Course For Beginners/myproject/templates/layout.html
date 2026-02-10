@@ -16,12 +16,16 @@
             <span role="img" aria-label="Home" title="Home">🏠</span>
         </a> |
         <a href="/about">
-            <span role="img" aria-label="About" title="About">😄</span></a> |
+            <span role="img" aria-label="About" title="About">😄</span>
+        </a> |
         <a href="{% url 'posts:list' %}">
-            <span role="img" aria-label="Posts" title="Posts">📰</span> |
-        </a>
+            <span role="img" aria-label="Posts" title="Posts">📰</span>
+        </a> |
         <a href="{% url 'users:register' %}">
-            <span role="img" aria-label="Register" title="Register">👤</span>
+            <span role="img" aria-label="Register" title="Register">👤</span> 
+        </a> |
+        <a href="{% url 'users:login' %}">
+            <span role="img" aria-label="User Login" title="User Login">🔑</span>
         </a>
     </nav>
     <main>

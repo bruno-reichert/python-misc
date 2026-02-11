@@ -21,12 +21,29 @@
         <a href="{% url 'posts:list' %}">
             <span role="img" aria-label="Posts" title="Posts">📰</span>
         </a> |
-        <a href="{% url 'users:register' %}">
-            <span role="img" aria-label="Register" title="Register">👤</span> 
-        </a> |
-        <a href="{% url 'users:login' %}">
-            <span role="img" aria-label="User Login" title="User Login">🔑</span>
-        </a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'posts:new-post' %}">
+                <span role="img" aria-label="New Post" title="New Post">📝</span>
+            </a> |
+            <form class="logout" action="{% url 'users:logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="logout-button" aria-label="User Logout" title="User Logout">👋</button>
+            </form> |
+            <a class="logged-in-user">Currently logged in as: 
+                {% if user.is_authenticated %}
+                {{ user.username }}
+                {% else %}
+                No one
+                {% endif %}
+            </a>
+            {% else %}
+            <a href="{% url 'users:register' %}">
+                <span role="img" aria-label="Register" title="Register">👤</span> 
+            </a> |
+            <a href="{% url 'users:login' %}">
+                <span role="img" aria-label="User Login" title="User Login">🔑</span>
+            </a> 
+        {% endif %}
     </nav>
     <main>
         {% block content %}{% endblock %}

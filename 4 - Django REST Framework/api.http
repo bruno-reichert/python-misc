@@ -1,0 +1,35 @@
+GET http://localhost:8000/products/ HTTP/1.1
+
+###
+
+POST http://localhost:8000/products/ HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcxNjE1ODUxLCJpYXQiOjE3NzE2MTU1NTEsImp0aSI6ImJjZTA5Zjc1ZGRmODRjMzRiMjEzN2FiMDRmNWM5NzM1IiwidXNlcl9pZCI6IjIifQ.i3LVdRMs0pj4y__0VB2OwK87f2aC4mlzjkfhkyEOTc0
+
+{
+    "name": "Why Isn't The Login Function Working?",
+    "description": "This God Damn HTTP BS Isn't Accepting The New User I Created And It's Really Irking Me Because, Well, There's No Reason It Shouldn't Work.",
+    "price": 420.69,
+    "stock": 2
+}
+
+###
+
+POST http://localhost:8000/api/token/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "test"
+}
+
+###
+
+GET http://localhost:8000/user-orders/ HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcxNjE2NjQ4LCJpYXQiOjE3NzE2MTYzNDgsImp0aSI6ImQ0Y2YyZWYyNzZiYzQ5YmE5OWZkMTI3OGQ2OWYzMmYzIiwidXNlcl9pZCI6IjEifQ.cqU3kMNfvnLJtOSX6Kd_Xao_z7H51av4HFQVlBIc3UI
+
+{
+    "username": "admin",
+    "password": "test"
+}

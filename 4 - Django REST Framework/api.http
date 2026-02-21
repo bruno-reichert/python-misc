@@ -27,9 +27,39 @@ Content-Type: application/json
 
 GET http://localhost:8000/user-orders/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcxNjE2NjQ4LCJpYXQiOjE3NzE2MTYzNDgsImp0aSI6ImQ0Y2YyZWYyNzZiYzQ5YmE5OWZkMTI3OGQ2OWYzMmYzIiwidXNlcl9pZCI6IjEifQ.cqU3kMNfvnLJtOSX6Kd_Xao_z7H51av4HFQVlBIc3UI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcxNjk2NTk1LCJpYXQiOjE3NzE2OTYyOTUsImp0aSI6ImViNDE0OWMyMmZhMjQ4YjBhZmU2YTIwOTQyNjc0MzBhIiwidXNlcl9pZCI6IjEifQ.zu1vFJZNGUkSgMg1La8xnJIzqINUYys1S2Yk9eN9phg
 
 {
     "username": "admin",
     "password": "test"
 }
+
+###
+
+POST http://localhost:8000/api/token/refresh/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc3MTc4Mjk0MSwiaWF0IjoxNzcxNjk2NTQxLCJqdGkiOiJlM2NhM2IzZjc4MmY0MzA2ODljZmNlOGJiNjMxZGU4MyIsInVzZXJfaWQiOiIxIn0.UcnoR0Z8mWEEt_IvekU_qIRJH2GGzumzr6pjJR8QDG0"
+}
+
+###
+
+GET http://localhost:8000/products/2/ HTTP/1.1
+
+###
+
+PUT http://localhost:8000/products/2/ HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcxNzAyMTA0LCJpYXQiOjE3NzE3MDE4MDQsImp0aSI6IjRmYzVjZDBmOTI2MTQwNzZhM2IwZGJkN2ZkOGRjOWY4IiwidXNlcl9pZCI6IjEifQ.1A62m93yuOOxGoC8J9EF5tiE3nXoA99j7qbKCROURXE
+
+{
+    "name": "A Better Coffee Machine",
+    "description": "This Coffee Machine Is So Much Better Than The Last One. It Makes Better Coffee, It Looks Better, And It Has A Longer Cord. It's Just Better.",
+    "price": 69.99,
+    "stock": 5
+}
+
+###
+
+DELETE http://localhost:8000/products/2/ HTTP/1.1

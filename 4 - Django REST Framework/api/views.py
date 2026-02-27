@@ -13,7 +13,7 @@ from api import models
 from api.filters import InStockFilterBackEnd, OrderFilter, ProductFilter
 from api.models import Order, OrderItem, Product
 from api.serializers import (OrderSerializer, ProductInfoSerializer,
-                             ProductSerializer)
+                             ProductSerializer, OrderCreateSerializer)
 
 # Create your views here.
 
@@ -52,31 +52,19 @@ class OrderViewSet(viewsets.ModelViewSet):
     filterset_class = OrderFilter 
     filter_backends = [DjangoFilterBackend]
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def get_serializer_class(self): # type: ignore
+        if self.action == 'create':
+            return OrderCreateSerializer
+        return super().get_serializer_class()
+
     def get_queryset(self):
         qs = super().get_queryset()
         if not self.request.user.is_staff:
             qs = qs.filter(user=self.request.user)
         return qs
-
-    # @action(detail=False, methods=['get'], url_path="user-orders")
-    # def user_orders(self, request):
-    #     orders = self.get_queryset().filter(user=request.user)
-    #     serializer = self.get_serializer(orders, many=True)
-    #     return Response(serializer.data)
-
-# class OrderListAPIView(generics.ListAPIView):
-#     queryset = Order.objects.prefetch_related('items__product')
-#     serializer_class = OrderSerializer
-
-# class UserOrderListAPIView(generics.ListAPIView):
-#     queryset = Order.objects.prefetch_related('items__product')
-#     serializer_class = OrderSerializer
-#     permission_classes = [IsAuthenticated]
-
-#     def get_queryset(self):
-#         qs = super().get_queryset()
-#         return qs.filter(user=self.request.user)
-
 
     
 class ProductInfoAPIView(APIView):

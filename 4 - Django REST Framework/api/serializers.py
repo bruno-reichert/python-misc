@@ -1,3 +1,4 @@
+from django.db import transaction
 from rest_framework import serializers
 from .models import Product, Order, OrderItem
 
@@ -28,6 +29,17 @@ class OrderCreateSerializer(serializers.ModelSerializer):
     order_id = serializers.UUIDField(read_only=True)
     items = OrderItemCreateSerializer(many=True)
 
+    def update(self, instance, validated_data):
+        orderitem_data = validated_data.pop('items')
+        with transaction.atomic():
+            instance = super().update(instance, validated_data)
+
+            if orderitem_data is not None:
+                instance.items.all().delete()  # Remove os itens antigos
+                for item in orderitem_data:
+                    OrderItem.objects.create(order=instance, **item)
+        return instance
+
     def create(self, validated_data):
         '''
         Cria um pedido e os itens do pedido a partir dos dados validados.
@@ -35,10 +47,12 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         - Ele extrai os dados dos itens do pedido, cria o pedido e depois cria cada item do pedido associado ao pedido criado.
         '''
         orderitem_data = validated_data.pop('items')
-        order = Order.objects.create(**validated_data)
 
-        for item in orderitem_data:
-            OrderItem.objects.create(order=order, **item)
+        with transaction.atomic():
+            order = Order.objects.create(**validated_data)
+
+            for item in orderitem_data:
+                OrderItem.objects.create(order=order, **item)
 
         return order
     

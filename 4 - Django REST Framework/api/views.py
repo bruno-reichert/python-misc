@@ -56,7 +56,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
     def get_serializer_class(self): # type: ignore
-        if self.action == 'create':
+        if self.action in ['create', 'update']:
             return OrderCreateSerializer
         return super().get_serializer_class()
 

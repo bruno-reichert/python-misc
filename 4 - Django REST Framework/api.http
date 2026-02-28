@@ -51,7 +51,7 @@ GET http://localhost:8000/products/2/ HTTP/1.1
 
 PUT http://localhost:8000/products/2/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcxNzAyMTA0LCJpYXQiOjE3NzE3MDE4MDQsImp0aSI6IjRmYzVjZDBmOTI2MTQwNzZhM2IwZGJkN2ZkOGRjOWY4IiwidXNlcl9pZCI6IjEifQ.1A62m93yuOOxGoC8J9EF5tiE3nXoA99j7qbKCROURXE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcyMzAyNDU4LCJpYXQiOjE3NzIzMDIxNTgsImp0aSI6IjRlZWY5OGI3YTM4MDQwZmFiZDY3OGEyYmU2MmY1MzEyIiwidXNlcl9pZCI6IjEifQ.IY8EzXhln0W7I9xgJNx87RbA5j0VQn7T92wLFfsz5gM
 
 {
     "name": "A Better Coffee Machine",
@@ -66,31 +66,46 @@ DELETE http://localhost:8000/products/2/ HTTP/1.1
 
 ###
 
-GET http://localhost:8000/orders/6e4a7c10-bdfd-48b0-ad32-1b6b3c1a7cc9 HTTP/1.1
+PUT http://localhost:8000/orders/6e4a7c10-bdfd-48b0-ad32-1b6b3c1a7cc9/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcyMTMxNzM4LCJpYXQiOjE3NzIxMzE0MzgsImp0aSI6IjJmYzE2MzY2Mzg4MDQ4ODhhZjU0ODAzZmJjYzJjMGQ5IiwidXNlcl9pZCI6IjEifQ.uCHAOvsx0LUWjtdkBZqRpjwk2pX6GEmuJh6dajfeGns
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcyMzAzMjk5LCJpYXQiOjE3NzIzMDI5OTksImp0aSI6IjA5YjE4NTRlMDQ3ODQyYzdhMDEzM2JjNTEyNTNkMTI3IiwidXNlcl9pZCI6IjEifQ.v4BVmteWR13LpxMJYTEAu6Dd6Pa4mMiZCePvyJG7KIA
 
 {
-    "username": "admin",
-    "password": "test"
+	"status": "Pending",
+	"items": [
+		{
+				"product": 4,
+				"quantity": 2
+		},
+		{
+				"product": 3,
+				"quantity": 3
+		}
+	]	
 }
 
 ###
 
 POST http://localhost:8000/orders/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcyMjE5NTkyLCJpYXQiOjE3NzIyMTkyOTIsImp0aSI6IjEwNjNjNDlmNDhiZjRiYmM4MGNjZmE2NmJhNjA0ZDc1IiwidXNlcl9pZCI6IjEifQ.FYhZcZw94-xnuSdvXR1KrMTaJkQy4XxbnrGMOziFldw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcyMzAzNjA5LCJpYXQiOjE3NzIzMDMzMDksImp0aSI6IjdhZjgxMTVhYzQwNTRmYjRhZmJhOTgwZjlkZjM5ZWFkIiwidXNlcl9pZCI6IjEifQ.Bs7CNan3xOrhLMHl6Zr1dgBf-kVCfPxlIPf67pL5A_4
+
 
 {
 	"status": "Pending",
 	"items": [
 		{
-				"product": 3,
-				"quantity": 2
+				"product": 6,
+				"quantity": 3
 		},
 		{
-				"product": 4,
-				"quantity": 1
+				"product": 5,
+				"quantity": 3
 		}
 	]	
 }
+
+###
+
+DELETE http://localhost:8000/orders/c9981293-f562-4d9f-83e1-f5385013ece0/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcyMzAzNjA5LCJpYXQiOjE3NzIzMDMzMDksImp0aSI6IjdhZjgxMTVhYzQwNTRmYjRhZmJhOTgwZjlkZjM5ZWFkIiwidXNlcl9pZCI6IjEifQ.Bs7CNan3xOrhLMHl6Zr1dgBf-kVCfPxlIPf67pL5A_4

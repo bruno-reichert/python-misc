@@ -1,3 +1,5 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.db.models import Max
 from django.shortcuts import get_object_or_404, render
 from django_filters.rest_framework import DjangoFilterBackend
@@ -11,9 +13,9 @@ from rest_framework.views import APIView
 
 from api import models
 from api.filters import InStockFilterBackEnd, OrderFilter, ProductFilter
-from api.models import Order, OrderItem, Product
+from api.models import Order, OrderItem, Product, User
 from api.serializers import (OrderSerializer, ProductInfoSerializer,
-                             ProductSerializer, OrderCreateSerializer)
+                             ProductSerializer, OrderCreateSerializer, UserSerializer)
 
 # Create your views here.
 
@@ -24,8 +26,16 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter, InStockFilterBackEnd] # Permite filtrar e buscar usando query params
     search_fields = ['=name', 'description'] # Permite buscar por nome e descrição usando query params, ex: /api/products/?search=example
     ordering_fields = ['price', 'name'] # Permite ordenar por preço e nome usando query params, ex: /api/products/?ordering=price ou /api/products/?ordering=-price
-    pagination_class = LimitOffsetPagination # Permite paginar os resultados usando query params, ex: /api/products/?limit=2&offset=4
+    pagination_class = None # Permite paginar os resultados usando query params, ex: /api/products/?limit=2&offset=4
 
+    @method_decorator(cache_page(60 * 60 * 2, key_prefix='product_list'))
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+    
+    def get_queryset(self):
+        import time
+        time.sleep(2)
+        return super().get_queryset()
 
     def get_permissions(self):
         self.permission_classes = [AllowAny] 
@@ -76,3 +86,8 @@ class ProductInfoAPIView(APIView):
             'max_price': products.aggregate(max_price=Max('price'))['max_price']
         })
         return Response(serializer.data)
+    
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    pagination_class = None

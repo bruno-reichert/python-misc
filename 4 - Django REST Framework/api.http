@@ -4,7 +4,7 @@ GET http://localhost:8000/products/ HTTP/1.1
 
 POST http://localhost:8000/products/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcxNjE1ODUxLCJpYXQiOjE3NzE2MTU1NTEsImp0aSI6ImJjZTA5Zjc1ZGRmODRjMzRiMjEzN2FiMDRmNWM5NzM1IiwidXNlcl9pZCI6IjIifQ.i3LVdRMs0pj4y__0VB2OwK87f2aC4mlzjkfhkyEOTc0
+Authorization: Bearer
 
 {
     "name": "Why Isn't The Login Function Working?",
@@ -27,7 +27,7 @@ Content-Type: application/json
 
 GET http://localhost:8000/orders/user-orders/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcyMTMxNzM4LCJpYXQiOjE3NzIxMzE0MzgsImp0aSI6IjJmYzE2MzY2Mzg4MDQ4ODhhZjU0ODAzZmJjYzJjMGQ5IiwidXNlcl9pZCI6IjEifQ.uCHAOvsx0LUWjtdkBZqRpjwk2pX6GEmuJh6dajfeGns
+Authorization: Bearer 
 
 {
     "username": "admin",
@@ -51,7 +51,7 @@ GET http://localhost:8000/products/2/ HTTP/1.1
 
 PUT http://localhost:8000/products/2/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcyMzAyNDU4LCJpYXQiOjE3NzIzMDIxNTgsImp0aSI6IjRlZWY5OGI3YTM4MDQwZmFiZDY3OGEyYmU2MmY1MzEyIiwidXNlcl9pZCI6IjEifQ.IY8EzXhln0W7I9xgJNx87RbA5j0VQn7T92wLFfsz5gM
+Authorization: Bearer 
 
 {
     "name": "A Better Coffee Machine",
@@ -68,7 +68,7 @@ DELETE http://localhost:8000/products/2/ HTTP/1.1
 
 PUT http://localhost:8000/orders/6e4a7c10-bdfd-48b0-ad32-1b6b3c1a7cc9/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcyMzAzMjk5LCJpYXQiOjE3NzIzMDI5OTksImp0aSI6IjA5YjE4NTRlMDQ3ODQyYzdhMDEzM2JjNTEyNTNkMTI3IiwidXNlcl9pZCI6IjEifQ.v4BVmteWR13LpxMJYTEAu6Dd6Pa4mMiZCePvyJG7KIA
+Authorization: Bearer 
 
 {
 	"status": "Pending",
@@ -88,7 +88,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 POST http://localhost:8000/orders/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcyMzAzNjA5LCJpYXQiOjE3NzIzMDMzMDksImp0aSI6IjdhZjgxMTVhYzQwNTRmYjRhZmJhOTgwZjlkZjM5ZWFkIiwidXNlcl9pZCI6IjEifQ.Bs7CNan3xOrhLMHl6Zr1dgBf-kVCfPxlIPf67pL5A_4
+Authorization: Bearer 
 
 
 {
@@ -108,4 +108,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 ###
 
 DELETE http://localhost:8000/orders/c9981293-f562-4d9f-83e1-f5385013ece0/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcyMzAzNjA5LCJpYXQiOjE3NzIzMDMzMDksImp0aSI6IjdhZjgxMTVhYzQwNTRmYjRhZmJhOTgwZjlkZjM5ZWFkIiwidXNlcl9pZCI6IjEifQ.Bs7CNan3xOrhLMHl6Zr1dgBf-kVCfPxlIPf67pL5A_4
+Authorization: Bearer 

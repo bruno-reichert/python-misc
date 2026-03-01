@@ -26,7 +26,7 @@ class Order(models.Model):
         CANCELLED = 'Cancelled',
 
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4) # UUIDField é um campo que armazena um identificador único universal (UUID). Ele é usado para garantir que cada registro tenha um identificador exclusivo, mesmo em sistemas distribuídos.
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=StatusChoices.choices, default=StatusChoices.PENDING)
     products = models.ManyToManyField(Product, through='OrderItem', related_name='orders')

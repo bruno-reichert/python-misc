@@ -1,5 +1,6 @@
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_headers
 from django.db.models import Max
 from django.shortcuts import get_object_or_404, render
 from django_filters.rest_framework import DjangoFilterBackend
@@ -11,6 +12,7 @@ from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+
 from api import models
 from api.filters import InStockFilterBackEnd, OrderFilter, ProductFilter
 from api.models import Order, OrderItem, Product, User
@@ -20,6 +22,7 @@ from api.serializers import (OrderSerializer, ProductInfoSerializer,
 # Create your views here.
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
+    throttle_scope = 'products'
     queryset = Product.objects.order_by('pk')
     serializer_class = ProductSerializer
     filterset_class = ProductFilter # Permite filtrar por nome e preço usando query params, ex: /api/products/?name=example&price=10
@@ -55,12 +58,18 @@ class ProductDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         return super().get_permissions()
     
 class OrderViewSet(viewsets.ModelViewSet):
+    throttle_scope = 'orders'
     queryset = Order.objects.prefetch_related('items__product')
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
     pagination_class = None
     filterset_class = OrderFilter 
     filter_backends = [DjangoFilterBackend]
+
+    @method_decorator(cache_page(60 * 60 * 2, key_prefix='order_list'))
+    @method_decorator(vary_on_headers("Authorization"))
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

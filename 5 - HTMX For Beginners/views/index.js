@@ -13,7 +13,10 @@ const createHomepageTemplate = () => /*html*/`
 
       <main>
         <div class="book-list">
-          <!-- book list here later -->
+          <button hx-get="/books" hx-target=".book-list">Show Books</button>
+          <!-- 
+          hx-get e hx-swap são atributos do HTMX. O primeiro indica a URL para onde a requisição será feita, e o segundo indica onde o conteúdo retornado deve ser inserido na página. O hx-target especifica o elemento onde o conteúdo deve ser inserido. Neste caso, o conteúdo retornado pela requisição para "/books" será inserido antes do final do elemento com a classe "book-list". Outras opções de hx-swap incluem "afterbegin", "beforebegin", "afterend", "replace", entre outras, que determinam a posição onde o conteúdo será inserido em relação ao elemento alvo. Outras opções de hx-target incluem seletores CSS, como "#id" e ".class", e "closest selector", que seleciona o elemento mais próximo que corresponde ao seletor especificado.
+          -->
         </div>
 
         <div class="add-book-form">

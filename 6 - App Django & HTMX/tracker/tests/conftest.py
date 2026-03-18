@@ -11,3 +11,17 @@ def transactions():
 def user_transactions():
     user = UserFactory()
     return TransactionFactory.create_batch(20, user=user)
+
+@pytest.fixture
+def user():
+    return UserFactory()
+
+@pytest.fixture
+def transaction_dict_params(user):
+    transaction = TransactionFactory(user=user)
+    return {
+        'type': transaction.type,
+        'amount': transaction.amount,
+        'date': transaction.date,
+        'category': transaction.category_id,
+    }

@@ -13,6 +13,11 @@
     <div class="mb-4 form-control flex flex-col">
         {{ form.amount|add_label_class:"label text-white mb-2" }}
         {% render_field form.amount class="input text-black" %}
+
+        {% for error in form.amount.errors %}
+            <div class="text-red-400 mt-1">{{ error }}</div>
+        {% endfor %}
+
     </div>
 
     <div class="mb-4 form-control flex flex-col">
@@ -26,4 +31,5 @@
     </div>
 
     <button class="btn btn-success bg-green-500 hover:bg-green-600 text-black p-4">Add</button>
+    <button class="btn btn-error bg-red-500 hover:bg-red-600 text-black p-4 ms-2" hx-get="{% url 'transactions-list' %}" hx-target="#transaction-block" hx-push-url="/transactions/">Cancel</button>
 </form>

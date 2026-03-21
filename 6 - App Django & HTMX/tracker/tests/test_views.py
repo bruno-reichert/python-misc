@@ -115,3 +115,15 @@ def test_update_transaction_request(user, transaction_dict_params, client):
     transaction = Transaction.objects.first()
     assert transaction.amount == 40 # type: ignore
     assert transaction.date == now # type: ignore
+
+@pytest.mark.django_db
+def test_delete_transaction_request(user, transaction_dict_params, client):
+    client.force_login(user)
+    assert Transaction.objects.filter(user=user).count() == 1
+
+    transaction = Transaction.objects.first()
+    client.delete(
+        reverse('delete-transaction', kwargs={'pk': transaction.pk}), # type: ignore
+    )
+
+    assert Transaction.objects.filter(user=user).count() == 0 

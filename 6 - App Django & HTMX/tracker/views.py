@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
+from django.core.paginator import Paginator
+from django.conf import settings
 from tracker.models import Transaction
 from tracker.filters import TransactionFilter
 from tracker.forms import TransactionForm 
@@ -13,9 +15,12 @@ def index(request):
 @login_required
 def transactions_list(request):
     transaction_filter = TransactionFilter(request.GET, queryset=Transaction.objects.filter(user=request.user).select_related('category'))
+    paginator = Paginator(transaction_filter.qs, settings.PAGE_SIZE)
+    transaction_page = paginator.page(1)
     total_income = transaction_filter.qs.get_total_income() # type: ignore
     total_expenses = transaction_filter.qs.get_total_expenses() # type: ignore
     context = {
+        'transactions': transaction_page,
         'filter': transaction_filter, 
         'total_income': total_income, 
         'total_expenses': total_expenses,
@@ -72,3 +77,13 @@ def delete_transaction(request, pk):
     transaction.delete()
     context = {'message': f'Transaction of {transaction.amount} on {transaction.date} deleted successfully!'}
     return render(request, 'tracker/partials/transaction-success.html', context) 
+
+@login_required
+def get_transactions(request):
+    import time
+    time.sleep(1) # Simula um atraso para demonstrar o indicador de carregamento
+    page = request.GET.get('page')
+    transaction_filter = TransactionFilter(request.GET, queryset=Transaction.objects.filter(user=request.user).select_related('category'))
+    paginator = Paginator(transaction_filter.qs, settings.PAGE_SIZE)
+    context = {'transactions': paginator.page(page)}
+    return render(request, 'tracker/partials/transactions-container.html#transaction_list', context)

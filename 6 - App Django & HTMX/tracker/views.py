@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.core.paginator import Paginator
 from django.conf import settings
@@ -7,6 +8,7 @@ from requests import request
 from tracker.models import Transaction
 from tracker.filters import TransactionFilter
 from tracker.forms import TransactionForm 
+from tracker.resources import TransactionResource
 from django_htmx.http import retarget
 from .charting import *
 
@@ -106,3 +108,15 @@ def transaction_charts(request):
         return render(request, 'tracker/partials/charts-container.html', context)
     else:
         return render(request, 'tracker/charts.html', context)
+    
+@login_required
+def export(request):
+    if request.htmx:
+        return HttpResponse(headers={'HX-Redirect': request.get_full_path()})
+    
+    transaction_filter = TransactionFilter(request.GET, queryset=Transaction.objects.filter(user=request.user).select_related('category'))
+
+    data = TransactionResource().export(transaction_filter.qs)
+    response = HttpResponse(data.csv)
+    response['Content-Disposition'] = 'attachment; filename="transactions.csv"'
+    return response

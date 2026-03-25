@@ -11,6 +11,7 @@ from tracker.forms import TransactionForm
 from tracker.resources import TransactionResource
 from django_htmx.http import retarget
 from .charting import *
+from tablib import Dataset
 
 # Create your views here.
 def index(request):
@@ -120,3 +121,23 @@ def export(request):
     response = HttpResponse(data.csv)
     response['Content-Disposition'] = 'attachment; filename="transactions.csv"'
     return response
+
+@login_required
+def import_transactions(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        resource = TransactionResource()
+        dataset = Dataset()
+        dataset.load(file.read().decode(), format='csv')
+        result = resource.import_data(dataset, dry_run=True, user=request.user)  # Test the data import
+
+        for row in result:
+            for error in row.errors:
+                print(error)
+
+        if not result.has_errors():
+            resource.import_data(dataset, dry_run=False, user=request.user)  # Actually import the data
+            context = {'message': 'Transactions imported successfully!'}
+            return render(request, 'tracker/partials/transaction-success.html', context)
+
+    return render(request, 'tracker/partials/import-transaction.html')

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .models import Parent, Student
 
@@ -62,15 +62,22 @@ def add_student(request):
         )
 
         messages.success(request, 'Student added successfully!')
-        return render(request, 'student_list')
+        return redirect('student_list')
 
     return render(request, 'students/add-student.html')
 
 def student_list(request):
-    return render(request, 'students/students.html')
+    student_list = Student.objects.select_related('parent').all()
+    context = {'student_list': student_list}
+
+    return render(request, 'students/students.html', context)
 
 def edit_student(request):
     return render(request, 'students/edit-student.html')
 
-def view_student(request):
-    return render(request, 'students/student-details.html')
+def view_student(request, slug):
+    student = get_object_or_404(Student, student_id = slug)
+    context = {
+        'student': student
+    }
+    return render(request, 'students/student-details.html', context)

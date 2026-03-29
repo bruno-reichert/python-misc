@@ -12,7 +12,7 @@
 <div class="col-sm-12">
 <h3 class="page-title">Student Details</h3>
 <ul class="breadcrumb">
-<li class="breadcrumb-item"><a href="students.html">Student</a></li>
+<li class="breadcrumb-item"><a href="/student">Student</a></li>
 <li class="breadcrumb-item active">Student Details</li>
 </ul>
 </div>
@@ -25,42 +25,42 @@
 <div class="about-info">
 <h4>About Me</h4>
 <div class="media mt-3">
-<img src="assets/img/user.jpg" class="mr-3" alt="...">
+<img src="{{ student.student_image.url }}" class="mr-3" alt="...">
 <div class="media-body">
 <ul>
 <li>
 <span class="title-span">Full Name : </span>
-<span class="info-span">Daisy Parks</span>
+<span class="info-span">{{ student.first_name }} {{ student.last_name }}</span>
 </li>
 <li>
 <span class="title-span">Department : </span>
-<span class="info-span">Computer Science</span>
+<span class="info-span">{{ student.section }}</span>
 </li>
 <li>
 <span class="title-span">Mobile : </span>
-<span class="info-span">+91 89657 48512</span>
+<span class="info-span">{{ student.mobile_number }}</span>
 </li>
 <li>
 <span class="title-span">Email : </span>
-<span class="info-span"><a href="https://preschool.dreamguystech.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7216131b010b32151f131b1e5c111d1f">[email&#160;protected]</a></span>
+<span class="info-span"><a href="{{ student.parent.father_email }}" class="__cf_email__" data-cfemail="7216131b010b32151f131b1e5c111d1f">[email&#160;protected]</a></span>
 </li>
 <li>
 <span class="title-span">Gender : </span>
-<span class="info-span">Male</span>
+<span class="info-span">{{ student.gender }}</span>
 </li>
 <li>
 <span class="title-span">DOB : </span>
-<span class="info-span">22 Apr 1995</span>
+<span class="info-span">{{ student.date_of_birth }}</span>
 </li>
 </ul>
 </div>
 </div>
 <div class="row mt-3">
 <div class="col-md-12">
-<p>Hello I am Daisy Parks. Lorem Ipsum is simply dummy text of the printing and typesetting industry, simply dummy text of the printing and typesetting industry.</p>
+<p>Hello I am {{ student.first_name }} {{ student.last_name }}. My parents are {{ student.parent.father_name }} and {{ student.parent.mother_name }}.  Lorem Ipsum is simply dummy text of the printing and typesetting industry, simply dummy text of the printing and typesetting industry.</p>
 </div>
 </div>
-<div class="row follow-sec">
+{% comment %} <div class="row follow-sec">
 <div class="col-md-4 mb-3">
 <div class="blue-box">
 <h3>2850</h3>
@@ -79,17 +79,17 @@
 <p>Friends</p>
 </div>
 </div>
-</div>
+</div> {% endcomment %}
 <div class="row mt-2">
 <div class="col-md-12">
 <h5>Permanent Address</h5>
-<p>480, Estern Avenue, Courtage area, New York</p>
+<p>{{ student.parent.permanent_address }}</p>
 </div>
 </div>
 <div class="row mt-2">
 <div class="col-md-12">
 <h5>Present Address</h5>
-<p>480, Estern Avenue, Courtage area, New York</p>
+<p>{{ student.parent.present_address }}</p>
 </div>
 </div>
 </div>
@@ -184,7 +184,7 @@
 </div>
 
 <footer>
-<p>Copyright © 2020 Dreamguys.</p>
+<p>Copyright © 2026 Obama Biden Industries.</p>
 </footer>
 
 </div>

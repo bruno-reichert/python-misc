@@ -116,7 +116,7 @@ def edit_student(request,slug):
             student.mobile_number = mobile_number
             student.admission_number = admission_number
             student.section = section
-            student.student_image =  # type: ignore
+            student.student_image = student_image # type: ignore
             student.save()
             
             return redirect("student_list")

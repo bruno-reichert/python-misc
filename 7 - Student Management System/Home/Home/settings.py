@@ -83,6 +83,19 @@ DATABASES = {
     }
 }
 
+# Enable foreign key constraints for SQLite
+import sqlite3
+from django.db.backends.sqlite3.base import DatabaseWrapper
+
+original_get_new_connection = DatabaseWrapper.get_new_connection
+
+def patched_get_new_connection(self, conn_params):
+    conn = original_get_new_connection(self, conn_params)
+    conn.execute('PRAGMA foreign_keys = ON')
+    return conn
+
+DatabaseWrapper.get_new_connection = patched_get_new_connection
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -134,3 +147,13 @@ AUTH_USER_MODEL = 'home_auth.CustomUser'  # Adjust 'home_auth' to the app where 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # Default backend
 )
+
+# Use console email backend for local development
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'your-email@gmail.com'  # Replace with your email
+# EMAIL_HOST_PASSWORD = 'your-email-password'  # Replace with your email password or app-specific passwo

@@ -93,7 +93,7 @@ def reset_password_view(request, token):
         messages.success(request, 'Password reset successful')
         return redirect('login')
     
-    return render(request, 'authentication/reset_password.html', {'token': token})  # Render reset password template
+    return render(request, 'authentication/reset-password.html', {'token': token})  # Render reset password template
 
 def logout_view(request):
     logout(request)

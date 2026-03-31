@@ -21,15 +21,15 @@ class CustomUser(AbstractUser):
     is_admin = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False) 
 
-    # Set related_name to None to prevent reverse relationship creation
+    # Override default ManyToMany relationships to prevent conflicts
     groups = models.ManyToManyField(
         'auth.Group',
-        related_name=None,
+        related_name='customuser_set',
         blank=True
     )
     user_permissions = models.ManyToManyField(
         'auth.Permission',
-        related_name=None,
+        related_name='customuser_set',
         blank=True
     )
 

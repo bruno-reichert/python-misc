@@ -19,10 +19,10 @@
          <div class="header">
             <div class="header-left">
                <a href="index.html" class="logo">
-               <img src="assets/img/logo.png" alt="Logo">
+               <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
                </a>
                <a href="index.html" class="logo logo-small">
-               <img src="assets/img/logo-small.png" alt="Logo" width="30" height="30">
+               <img src="{% static 'assets/img/logo-small.png' %}" alt="Logo" width="30" height="30">
                </a>
             </div>
             <a href="javascript:void(0);" id="toggle_btn">
@@ -56,7 +56,7 @@
                               <a href="#">
                                  <div class="media">
                                     <span class="avatar avatar-sm">
-                                    <img class="avatar-img rounded-circle" alt="User Image" src="assets/img/profiles/avatar-02.jpg">
+                                    <img class="avatar-img rounded-circle" alt="User Image" src="{% static 'assets/img/profiles/avatar-01.jpg' %}">
                                     </span>
                                     <div class="media-body">
                                        <p class="noti-details"><span class="noti-title">{{ notification.user.username }}</span> {{ notification.message }} <span class="noti-title">your estimate</span></p>
@@ -66,7 +66,6 @@
                               </a>
                            </li>
                            {% endfor %}
-
                         </ul>
                      </div>
                      <div class="topnav-dropdown-footer">

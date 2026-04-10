@@ -6,13 +6,53 @@ Index Page
 
 {% block content %}
     <h1>Welcome to the Flask App!</h1>
-    <p>{{ myvalue }}</p>
-    <p>The result is: {{ myresult }}</p>
-    <ul>
-        {% for item in mylist %}
-            <li {% if item == 30 %}style="color: red;"{% endif %}>{{ item }}</li>
-        {% endfor %}
-    </ul>
 
-    <a href="{{ url_for('other') }}">Other</a>
+    <form action="{{ url_for('index') }}" method="POST">
+        <input type="text" name="username" placeholder="Username"> <br>
+        <input type="password" name="password" placeholder="Password"> <br>
+        <input type="submit" value="Login">
+    </form>
+
+    <h2>File Upload</h2>
+    <form action="{{ url_for('file_upload') }}" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accepts="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, text/plain" required> <br>
+        <input type="submit" value="Upload">
+    </form>
+
+    <h2>Convert CSV</h2>
+    <form action="{{ url_for('convert_csv') }}" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accepts="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required> <br>
+        <input type="submit" value="Convert Excel to CSV">
+    </form>
+
+    <h2>Convert CSV Download</h2>
+    <form action="{{ url_for('convert_csv_download_page') }}" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accepts="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required> <br>
+        <input type="submit" value="Convert Excel to CSV (With A Download Page That's Very Professional)">
+    </form>
+
+    <h2>JavaScript JSON Request</h2>
+    <button id="post_button">Send POST Request</button>
+
+    <script type="text/javascript">
+        const postButton = document.getElementById('post_button');
+        const jsonData = {name: 'Mike', greeting: 'Hello'}
+        postButton.addEventListener('click', () =>{
+            fetch('{{ url_for("handle_post")}}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'charset': 'utf-8'
+                },
+                body: JSON.stringify(jsonData)
+            })
+            .then(response => response.json())
+            .then(data =>{
+                console.log('Success:', data)
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            })
+        })
+    </script>
 {% endblock %}

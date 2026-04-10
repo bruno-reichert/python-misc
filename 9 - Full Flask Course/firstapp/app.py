@@ -1,36 +1,72 @@
-from flask import Flask, redirect, request, render_template, url_for
+from flask import Flask, redirect, request, render_template, Response, send_from_directory, jsonify
+import pandas as pd
+import os
+import uuid
 
 app = Flask(__name__, template_folder='templates')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Example routes
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    myvalue = "This is a test value!"
-    myresult = 10 + 20
-    mylist = [10, 20, 30, 40, 50]
-    return render_template('index.html', myvalue=myvalue, myresult=myresult, mylist=mylist)
+    if request.method == "GET":
+        return render_template('index.html')
+    else:
+        username = request.form['username']
+        password = request.form['password']
+        if username == 'admin' and password == 'password':
+            return 'Login successful!'
+        else:
+            return 'Login failed!'
+        
+@app.route('/file_upload', methods=['POST'])
+def file_upload():
+    file = request.files['file']
+    if file.content_type == 'text/plain':
+        return file.read().decode('utf-8')
+    elif file.content_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' or file.content_type == 'application/vnd.ms-excel':
+        df = pd.read_excel(file)
+        return df.to_html()
+    else:
+        return "Unsupported file type!"
+    
+@app.route('/convert_csv', methods=['POST'])
+def convert_csv():
+    file = request.files['file']
+    df = pd.read_excel(file)
+    response = Response(df.to_csv(index=False),
+    mimetype='text/csv',
+    headers={"Content-disposition":
+             "attachment; filename=result.csv"})
+    return response
 
-@app.route('/other')
-def other():
-    some_text = "This is some text to demonstrate filters."
-    return render_template('other.html', some_text=some_text)
+@app.route('/convert_csv_download_page', methods=['POST'])
+def convert_csv_download_page():
+    file = request.files['file']
+    df = pd.read_excel(file)
 
-@app.route('/redirect_endpoint')
-def redirect_endpoint():
-    return redirect(url_for('other'))
+    downloads_dir = os.path.join(BASE_DIR, 'downloads')
+    if not os.path.exists(downloads_dir):
+        os.makedirs(downloads_dir)
+    filename = f'{uuid.uuid4()}.csv'
+    df.to_csv(os.path.join(downloads_dir, filename))
+    return render_template('download.html', filename=filename)
 
-@app.template_filter('reverse_string')
-def reverse_string(s):
-    return s[::-1]
+@app.route('/download/<filename>')
+def download(filename):
+    downloads_dir = os.path.join(BASE_DIR, 'downloads')
+    return send_from_directory(downloads_dir, filename, download_name='result.csv')
 
-@app.template_filter('repeat')
-def repeat(s, times=2):
-    return s * times
+@app.route('/handle_post', methods=['POST'])
+def handle_post():
+    assert request.json is not None # Added to stop typescript error
+    greeting = request.json['greeting'] 
+    name = request.json['name']
 
-@app.template_filter('alternate_case')
-def alternate_case(s):
-    return ''.join(c.lower() if i % 2 == 0 else c.upper() for i, c in enumerate(s))
+    with open('file.txt', 'w') as f:
+        f.write(f'{greeting}, {name}!')
 
+    return jsonify({'message': 'Data saved to file.txt'})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

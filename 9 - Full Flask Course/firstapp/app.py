@@ -1,36 +1,35 @@
-from flask import Flask, request, make_response
+from flask import Flask, redirect, request, render_template, url_for
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 # Example routes
 @app.route('/')
 def index():
-    return '<h1>Hello, World!</h1>'
+    myvalue = "This is a test value!"
+    myresult = 10 + 20
+    mylist = [10, 20, 30, 40, 50]
+    return render_template('index.html', myvalue=myvalue, myresult=myresult, mylist=mylist)
 
-@app.route('/glados')
-def glados():
-    response = make_response('<h1>GLaDOS is here to test you!</h1>')
-    response.status_code = 202
-    response.headers['Test-Header'] = 'This is a custom header'
-    return response
+@app.route('/other')
+def other():
+    some_text = "This is some text to demonstrate filters."
+    return render_template('other.html', some_text=some_text)
 
-# Examples of dynamic routes
-@app.route('/greet/<name>')
-def greet(name):
-    return f'<h1>Hello, {name}!</h1>'
+@app.route('/redirect_endpoint')
+def redirect_endpoint():
+    return redirect(url_for('other'))
 
-@app.route('/add/<int:num1>/<int:num2>')
-def add(num1, num2):
-    return f'<h1>{num1} + {num2} = {num1 + num2}</h1>'
+@app.template_filter('reverse_string')
+def reverse_string(s):
+    return s[::-1]
 
-@app.route('/handle_url_params')
-def handle_url_params():
-    if 'greeting' and 'name' in request.args.keys():
-        greeting = request.args.get('greeting')
-        name = request.args.get('name')
-        return f'<h1>{greeting}, {name}!</h1>'
-    else:
-        return '<h1>Please provide both "greeting" and "name" URL parameters.</h1>'
+@app.template_filter('repeat')
+def repeat(s, times=2):
+    return s * times
+
+@app.template_filter('alternate_case')
+def alternate_case(s):
+    return ''.join(c.lower() if i % 2 == 0 else c.upper() for i, c in enumerate(s))
 
 
 if __name__ == '__main__':

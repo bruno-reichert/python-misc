@@ -3,38 +3,17 @@
 {% block title %}Index{% endblock %}
 
 {% block content %}
-    <h1>People</h1>
-    <ul>
-        {% for person in people %}
-        <li>{{ person }} (pid: {{ person.pid }})
-            <button onclick="deletePerson({{ person.pid }})">Delete</button>
-            <a href="{{ url_for('details', pid=person.pid) }}">Details</a>
-        </li>
-        {% endfor %}
-    </ul>
+    <h1>Index Page</h1>
 
-    <h3>New Person</h3>
-    <form action="{{ url_for('index') }}" method="POST">
-        <input type="text" name="name" placeholder="Name" required> <br>
-        <input type="number" name="age" placeholder="Age"> <br>
-        <input type="text" name="job" placeholder="Job"> <br>
-        <input type="submit" value="Add Person">
-    </form>
+    {% if current_user.is_authenticated %}
+    <p>Welcome, {{ current_user.username }}!</p>
+    {% else %}
+    <p>Hello!</p>
+    {% endif %}
 
-    <script>
-        function deletePerson(pid) {
-            fetch(`/delete/${pid}`, {
-                method: 'DELETE'
-            }).then(response =>{
-                if (response.ok){
-                    window.location.reload();
-                }
-                else{
-                    console.error('Failed to delete person with pid:', pid);
-                }
-            }).catch(error => {
-                console.error('Error deleting person with pid:', pid, error);
-            }); 
-        }
-    </script>
+    <a href="{{ url_for('signup') }}">Sign Up</a>
+    <a href="{{ url_for('login') }}">Login</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="{{ url_for('secret') }}">THE SECRET PAGE</a>
+
 {% endblock %}

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, make_respo
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime, date
+from sqlalchemy import func
 
 app = Flask(__name__)
 
@@ -32,6 +33,7 @@ def parse_date_or_none(s:str):
 def index():
     start_str = (request.args.get('start') or "").strip()
     end_str = (request.args.get('end') or "").strip()
+    selected_category = (request.args.get('category') or "").strip()
 
     start_date = parse_date_or_none(start_str)
     end_date = parse_date_or_none(end_str)
@@ -46,10 +48,25 @@ def index():
         q = q.filter(Expense.date >= start_date)
     if end_date:
         q = q.filter(Expense.date <= end_date)
+    if selected_category:
+        q = q.filter(Expense.category == selected_category)
 
     expenses = q.order_by(Expense.date.desc(), Expense.id.desc()).all()
     total = round(sum(e.amount for e in expenses), 2)
-    print(expenses)
+    cat_q = db.session.query(Expense.category, func.sum(Expense.amount))
+    if start_date:
+        cat_q = cat_q.filter(Expense.date >= start_date)
+    if end_date:
+        cat_q = cat_q.filter(Expense.date <= end_date)
+    if selected_category:
+        cat_q = cat_q.filter(Expense.category == selected_category)
+
+    cat_rows = cat_q.group_by(Expense.category).all()
+    print(cat_rows)
+    cat_labels = [c for c, _ in cat_rows]
+    cat_values = [round(float(s or 0), 2) for _, s in cat_rows]
+
+
     return render_template(
         'index.html', 
         expenses=expenses, 
@@ -57,7 +74,10 @@ def index():
         total=total,
         start_str = start_str,
         end_str = end_str,
-        today = date.today().isoformat()
+        today = date.today().isoformat(),
+        selected_category=selected_category,
+        cat_labels = cat_labels,
+        cat_values = cat_values
         )
 
 @app.route('/add', methods=['POST'])

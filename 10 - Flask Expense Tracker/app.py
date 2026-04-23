@@ -192,9 +192,19 @@ def edit_post(expense_id):
     except ValueError:
         flash("Amount must be a positive number!", "error")
         return redirect(url_for("edit", expense_id=expense_id))
+    try:
+        d = datetime.strptime(date_str, "%Y-%m-%d").date() if date_str else date.today()
+    except ValueError:
+        d = date.today()
 
-    return request.form
+    e.description = description
+    e.amount = amount
+    e.category = category
+    e.date = d
 
+    db.session.commit()
+    flash('Expense updated!', "success")
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True, port=4848)

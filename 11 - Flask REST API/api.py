@@ -19,10 +19,25 @@ user_args = reqparse.RequestParser()
 user_args.add_argument('name', type=str, required=True, help="Name cannot be blank!")
 user_args.add_argument('email', type=str, required=True, help="E-mail cannot be blank!")
 
+userFields = {
+    'id': fields.Integer,
+    'name': fields.String,
+    'email': fields.String,
+}
+
 class Users(Resource):
+    @marshal_with(userFields)
     def get(self):
         users = UserModel.query.all()
         return users
+    @marshal_with(userFields)
+    def post(self):
+        args = user_args.parse_args()
+        user = UserModel(name=args['name'], email=args['email']) # type: ignore
+        db.session.add(user)
+        db.session.commit()
+        users = UserModel.query.all()
+        return users, 201
     
 api.add_resource(Users, '/api/users/')
 
